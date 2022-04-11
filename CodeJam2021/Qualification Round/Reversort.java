@@ -25,29 +25,26 @@ public class Reversort {
             int N = sc.nextInt();
             int[] list = new int[N + 1];
             list[0] = 0;
-            for (int i = 1; i < list.length; i++)
+            for (int i = 1; i < N+1; i++)
                 list[i] = sc.nextInt();
             // System.out.println(Arrays.toString(list) + " " + N);
-            System.out.println("Case #" + ind + ": " + reversort(list, N, 1, N, 0));
+            System.out.println("Case #" + ind + ": " + reversort(list, 1, N));
 
         }
         sc.close();
     }
 
-    static int reversort(int[] list, int n, int i, int j, int cost) {
+    static int reversort(int[] list,int i, int n) {
         if (i == n)
-            return cost;
+            return 0;
         else {
-            j = minimumPosition(list, i, j);
-            System.out.println(Arrays.toString(list));
-            cost += j - i + 1;
-            System.out.println("cost " + cost);
-            if (i == j) {
-                j = n;
-                return reversort(list, n, i + 1, j, cost);
-            }
+            int j = minimumPosition(list, i, n);
+            // System.out.println(Arrays.toString(list));
+            int cost = j - i + 1;
+            // System.out.println("cost " + cost);
             reverse(list, i, j);
-            return reversort(list, n, i + 1, j, cost);
+            return reversort(list, i + 1, n) + cost;
+
         }
 
     }
@@ -66,8 +63,7 @@ public class Reversort {
     }
 
     static void reverse(int[] list, int i, int j) {
-        int limit = j / 2;
-        while (j > limit) {
+        while (i < j) {
             int temp = list[i];
             list[i] = list[j];
             list[j] = temp;
